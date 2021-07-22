@@ -3,37 +3,39 @@ import * as yup from "yup";
 import axios from 'axios';
 
 let schema = yup.object().shape({
-    userName: yup.string().required("User Name is required"),
+    username: yup.string().required("Username is required"),
     password: yup.string().required("Password is required")
   });
 
 const LogIn = () => {
 
     const [logIn, setLogIn] = useState({
-        userName:"",
+        username:"",
         password: ""
     });
 
     const [errors, setErrors] = useState({
-        userName:"",
+        username:"",
         password: ""
     });
 
     const [user, setUser] = useState([]);
 
-    const setFormErrors = (userName, value) => {
+    const [disabled, setDisabled] = useState(true);
+
+    const setFormErrors = (username, value) => {
         yup
-          .reach(schema, userName)
+          .reach(schema, username)
           .validate(value)
-          .then(() => setErrors({ ...errors, [userName]: "" }))
-          .catch((err) => setErrors({ ...errors, [userName]: err.errors[0] }));
+          .then(() => setErrors({ ...errors, [username]: "" }))
+          .catch((err) => setErrors({ ...errors, [username]: err.errors[0] }));
       };
 
       const onChange = (event) => {
-        const { userName, type, value, checked } = event.target;
+        const { username, type, value, checked } = event.target;
         const valueToUse = type === "checkbox" ? checked : value;
-        setFormErrors(userName, valueToUse);
-        setLogIn({ ...logIn, [userName]: valueToUse });
+        setFormErrors(username, valueToUse);
+        setLogIn({ ...logIn, [username]: valueToUse });
         console.log("Being Changed");
       };
 
@@ -60,12 +62,12 @@ const LogIn = () => {
         <form className='form container' onSubmit={submitHandler}>
           <div className='form-div'>
 
-            <div class='name'>
-              <label>User Name
-                <input type="text" onChange={onChange} name="userName" values={logIn.userName}/>
+            <div class='Username'>
+              <label>Username
+                <input type="text" onChange={onChange} name="username" values={logIn.username}/>
               </label>
               <div style={{ color: "red" }}>
-                  <div>{errors.userName}</div>
+                  <div>{errors.username}</div>
               </div>
             </div>
 
