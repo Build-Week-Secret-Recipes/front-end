@@ -31,3 +31,20 @@ export const Button = ({
     </Link>
   );
 };
+
+// //“scripts”: {
+//     “server”: “nodemon index.js”,
+//     “start”: “node index.js”,
+//     “migrate”: “knex migrate:latest”,
+//     “seed”: “knex seed:run”,
+//     “test”: “cross-env DB_ENV=testing jest --watchAll --verbose --runInBand”
+//   }
+
+
+/*
+        "image": null,
+        "recipe_name": "Spaghetti",
+        "description": "Don't toucha my Spaghet",
+        "prep_time": "15 minutes",
+        "cook_time": "15 minutes" 
+*/

@@ -43,7 +43,7 @@ const LogIn = () => {
         event.preventDefault();
         console.log(logIn);
         axios
-          .post("https://reqres.in/api/users", form)
+          .post("https://reqres.in/api/users")
           .then((res) => {
             setUser([...user,res.data]);
             console.log("success", res);
