@@ -12,6 +12,9 @@ const Recipe = () =>  {
         cookTime: '',
     }
 
+    const [recipe, setRecipe] = useState([])
+    const [editing, setEditing] = useState(false);
+
     const [recipeForm, setRecipeForm] = useState({initialState})
 
     const handleChange = e => {
@@ -21,13 +24,34 @@ const Recipe = () =>  {
         setRecipeForm({...recipeForm, [name]:trueValue })
     }
 
+    const toggleEdit = value => {
+        setEditing(value);
+    }
+
+    const deleteRecipe = (recipeToDelete) => {
+        axios
+        .delete(`https://secret-recipes-backend.herokuapp.com/api/recipe/${recipeToDelete.id}`)
+        .then(() => {
+            setRecipe(recipe.filter(recipe => recipe.id !== recipeToDelete.id))
+        })
+        .catch(err => console.log("err deleting recipe: "))
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios().post('https://secret-recipes-backend.herokuapp.com/api/recipes')
+        axios().post('https://secret-recipes-backend.herokuapp.com/api/recipes', recipeForm)
+        .then(res => {
+            setRecipeForm({res})
+        })
     }
+
+    // Put ingredients and steps inside return
 
     return (
         <div>
+            
+            <span className="deleteRecipe" onClick={deleteRecipe}>x</span>
+
             <form onSubmit={handleSubmit}>
                 <label >User ID:
                     <input type="text" name='userId' onChange={handleChange} value={recipeForm.admin} />
