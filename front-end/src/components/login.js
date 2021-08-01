@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as yup from "yup";
 import axios from 'axios';
+import axiosWithAuth from './helpers/axiosWithAuth'
 
 let schema = yup.object().shape({
     username: yup.string().required("Username is required"),
@@ -9,19 +10,19 @@ let schema = yup.object().shape({
 
 const LogIn = () => {
 
-    const [logIn, setLogIn] = useState({
-        username:"",
-        password: ""
-    });
+  const initialState = {
+    username: '',
+    password: ''
+  }
 
-    const [errors, setErrors] = useState({
-        username:"",
-        password: ""
-    });
+    const [logIn, setLogIn] = useState({initialState});
+
+    const [errors, setErrors] = useState({initialState});
+
 
     const [user, setUser] = useState([]);
 
-    const [disabled, setDisabled] = useState(true);
+    const [disabled, setDisabled] = useState(false);
 
     const setFormErrors = (username, value) => {
         yup
@@ -36,24 +37,23 @@ const LogIn = () => {
         const valueToUse = type === "checkbox" ? checked : value;
         setFormErrors(username, valueToUse);
         setLogIn({ ...logIn, [username]: valueToUse });
-        console.log("Being Changed");
+        console.log("Being Changed", valueToUse);
       };
 
       const submitHandler = (event) => {
         event.preventDefault();
-        console.log(logIn);
-        axios
-          .post("https://reqres.in/api/users", form)
+        axiosWithAuth()
+          .post("/login", logIn)
           .then((res) => {
+            localStorage.setItem('token', res.data.payload)
             setUser([...user,res.data]);
             console.log("success", res);
           })
           .catch((err) => {
-            debugger;
+            console.log("This is the OOPSIE", err);
           });
       };
 
-      console.log(axios.post)
       useEffect(() => {
         schema.isValid(logIn).then((valid) => setDisabled(!valid));
       }, [logIn]);
@@ -81,7 +81,7 @@ const LogIn = () => {
             </div>
 
             <div className='submit' name="submit">
-                <button disabled={disabled}>Submit</button>
+                <button disabled={false}>Submit</button>
               </div>
 
           </div>

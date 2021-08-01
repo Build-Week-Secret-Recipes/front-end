@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
 import * as yup from "yup";
+import axiosWithAuth from './helpers/axiosWithAuth'
 import styled from 'styled-components'
+import ConfusingGlobals from 'confusing-browser-globals';
 
-export default function signup() {
+const Signup = () =>  {
 
     let schema = yup.object().shape({
         username: yup.string().required(),
         password: yup.string().required(),
         firstname: yup.string().required(),
-        lastname: yup.string.required(),
+        lastname: yup.string().required(),
         email: yup.string().required(),
         admin: yup.boolean(),
         user: yup.boolean()
@@ -29,7 +31,7 @@ export default function signup() {
         lastname: '',
         email: '',
     }
-
+    
     const [formData, setFormData] = useState(intialFormData);
     const [errors, setErrors] = useState(defaultErrors)
 
@@ -53,8 +55,16 @@ export default function signup() {
         })
     }
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        axiosWithAuth()
+            .post('/register', formData)
+            .then(res => {
+                localStorage.setItem('token', res.data.payload)
+                console.log("registering to server!: ", res);
+            })
+            .catch(err => console.log("This is the BUU BUU!!: ", err))
         console.log('submitting')
     }
 
@@ -85,3 +95,5 @@ export default function signup() {
         </div>
     )
 }
+
+export default Signup;
