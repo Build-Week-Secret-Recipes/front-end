@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import * as yup from "yup";
+import axiosWithAuth from './helpers/axiosWithAuth'
 import styled from 'styled-components'
+import ConfusingGlobals from 'confusing-browser-globals';
 
 const Signup = () =>  {
 
@@ -53,8 +55,16 @@ const Signup = () =>  {
         })
     }
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        axiosWithAuth()
+            .post('/register', formData)
+            .then(res => {
+                localStorage.setItem('token', res.data.payload)
+                console.log("registering to server!: ", res);
+            })
+            .catch(err => console.log("This is the BUU BUU!!: ", err))
         console.log('submitting')
     }
 

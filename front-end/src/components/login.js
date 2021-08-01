@@ -43,14 +43,14 @@ const LogIn = () => {
       const submitHandler = (event) => {
         event.preventDefault();
         axiosWithAuth()
-          .post("https://reqres.in/api/users", logIn)
+          .post("/login", logIn)
           .then((res) => {
             localStorage.setItem('token', res.data.payload)
             setUser([...user,res.data]);
             console.log("success", res);
           })
           .catch((err) => {
-            debugger;
+            console.log("This is the OOPSIE", err);
           });
       };
 
