@@ -32,12 +32,9 @@ const LogIn = () => {
           .catch((err) => setErrors({ ...errors, [username]: err.errors[0] }));
       };
 
-      const onChange = (event) => {
-        const { username, type, value, checked } = event.target;
-        const valueToUse = type === "checkbox" ? checked : value;
-        setFormErrors(username, valueToUse);
-        setLogIn({ ...logIn, [username]: valueToUse });
-        console.log("Being Changed", valueToUse);
+      const onChange = (e) => {
+          setLogIn({...logIn, username: e.target.value})
+        console.log("Being Changed", e);
       };
 
       const submitHandler = (event) => {
