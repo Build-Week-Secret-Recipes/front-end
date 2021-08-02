@@ -1,5 +1,9 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { BrowserRouter as Router, Switch, Link } from 'react-router-dom';
+import steps from './steps'
+import ingredients from './ingredients'
+
 
 const Recipe = () =>  { 
 
@@ -50,6 +54,11 @@ const Recipe = () =>  {
     return (
         <div>
             
+            <Switch>
+                <Router path='/recipe/steps' exact component={steps}/>
+                <Router path='/recipe/ingredients' exact component={ingredients}/>
+            </Switch>
+
             <span className="deleteRecipe" onClick={deleteRecipe}>x</span>
 
             <form onSubmit={handleSubmit}>
@@ -73,6 +82,13 @@ const Recipe = () =>  {
                 </label>
                 <button>Save Recipe</button>
             </form>
+
+            <button>Steps: 
+                <Link to='/recipe/steps' className='nav-links'></Link>
+            </button>
+            <button>Ingredients
+                <Link to='/recipe/ingredients' className='nav-links'></Link>
+            </button>
         </div>
     )
 }

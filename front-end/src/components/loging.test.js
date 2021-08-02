@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen} from "@testing-library/react";
-import App from './App'
+import Login from './login'
 
 test("Renders without errors", ()=> {
-    render(<App/>)
-});
+    render(<Login/>)
+})

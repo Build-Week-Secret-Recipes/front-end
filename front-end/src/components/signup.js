@@ -79,10 +79,10 @@ const Signup = () =>  {
                     <input type="password" name='password' onChange={handleChange} value={formData.password} placeholder='Enter Password' />
                 </label>
                 <label >First Name:
-                    <input type="text" name='firstname' onChange={handleChange} value={formData.firstname} placeholder='Enter First Name' />
+                    <input type="text" name='first_name' onChange={handleChange} value={formData.firstname} placeholder='Enter First Name' />
                 </label>
                 <label >Last Name:
-                    <input type="text" name='firstname' onChange={handleChange} value={formData.lastname} placeholder='Enter Last Name' />
+                    <input type="text" name='last_name' onChange={handleChange} value={formData.lastname} placeholder='Enter Last Name' />
                 </label>
                 <label >Email:
                     <input type="email" name='email' onChange={handleChange} value={formData.email} placeholder='Enter Email' />
